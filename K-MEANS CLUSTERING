@@ -1,3 +1,4 @@
+#UNSUPERVISED LEARNING
 import pandas as pd
 import numpy as np
 from sklearn.cluster import KMeans
@@ -6,11 +7,12 @@ import matplotlib.pyplot as plt
 # Load the data (replace 'productsalesanalysis1.csv' with your actual data file)
 data = pd.read_csv('D:\IBM PROJECT\productsalesanalysis1.csv')
 
-# Select relevant features: Product_Name, Profit
-X = data[['Product_Name', 'Profit']]
+# Select relevant features: Product_Name, Profit, and Region
+X = data[['Product_Name', 'Profit', 'Region']]
 
-# Convert Product_Name to numerical labels
+# Convert Product_Name and Region to numerical labels
 X['Product_Name'] = pd.factorize(X['Product_Name'])[0]
+X['Region'] = pd.factorize(X['Region'])[0]
 
 # Determine the optimal number of clusters (K) using the Elbow method
 wcss = []
