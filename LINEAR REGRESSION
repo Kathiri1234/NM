@@ -1,0 +1,43 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+
+# Load and preprocess the sales data
+data = pd.read_csv("D:\IBM PROJECT\productsalesanalysis1.csv")
+# Assuming 'product_name' and 'region' are categorical features and 'profit' is the dependent variable
+X = data[['Product_Name', 'Region']]
+Y = data['Profit']
+print(X,Y)
+
+# One-hot encode categorical features
+ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [0, 1])], remainder='passthrough')
+X = ct.fit_transform(X)
+
+# Avoiding the dummy variable trap by dropping one column for each one-hot encoded feature
+X = X[:, 1:]
+
+# Split the data into training and testing sets
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
+
+# Train the linear regression model
+model = LinearRegression()
+model.fit(X_train, Y_train)
+
+# Predict on the test set
+y_pred = model.predict(X_test)
+
+# Print predictions and actual values
+print('Predictions:', y_pred)
+print('Actual Values:', Y_test)
+
+# Print the coefficients and model evaluation
+print('Coefficients:', model.coef_)
+print('Intercept:', model.intercept_)
+
+# Mean squared error
+mse = np.mean((y_pred - Y_test) ** 2)
+print('MeanSquaredError:',mse)
