@@ -10,7 +10,7 @@ from sklearn.compose import ColumnTransformer
 # Load and preprocess the sales data
 data = pd.read_csv("D:\IBM PROJECT\productsalesanalysis1.csv")
 # Assuming 'product_name' and 'region' are categorical features and 'profit' is the dependent variable
-X = data[['Product_Name', 'Region']]
+X = data[['Product_Name','Region']]
 Y = data['Profit']
 print(X,Y)
 
