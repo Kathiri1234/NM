@@ -47,14 +47,24 @@ else:
     X_filtered = X_filtered[:, 1:]
     y_pred_filtered = model.predict(X_filtered)
 
-    # Find the highest predicted profit value and its corresponding Order_ID
-    max_profit_index = np.argmax(y_pred_filtered)
-    max_profit = y_pred_filtered[max_profit_index]
-    order_id = filtered_data.iloc[max_profit_index]['Order_ID']
+    # Sort the filtered data by predicted profit in descending order
+    sorted_data = filtered_data.copy()
+    sorted_data['Predicted_Profit'] = y_pred_filtered
+    sorted_data = sorted_data.sort_values(by='Predicted_Profit', ascending=False)
 
-    # Print the highest predicted profit value and its corresponding Order_ID
-    print(f"The highest predicted profit value for Region {region_input} is: {max_profit:.2f}")
-    print(f"The corresponding Order_ID is: {order_id}")
+    # Get the top 5 and bottom 5 records
+    top_5 = sorted_data.head(5)
+    bottom_5 = sorted_data.tail(5)
+
+    # Print the top 5 predicted profit values and corresponding Order_IDs, Product Names
+    print("\nTop 5 Predicted Profit Values:")
+    for index, row in top_5.iterrows():
+        print(f"Order_ID: {row['Order_ID']}, Product Name: {row['Product_Name']}, Predicted Profit: {row['Predicted_Profit']:.2f}")
+
+    # Print the bottom 5 predicted profit values and corresponding Order_IDs, Product Names
+    print("\nBottom 5 Predicted Profit Values:")
+    for index, row in bottom_5.iterrows():
+        print(f"Order_ID: {row['Order_ID']}, Product Name: {row['Product_Name']}, Predicted Profit: {row['Predicted_Profit']:.2f}")
 
     # Create a scatter plot for visualization
     plt.figure(figsize=(8, 6))
@@ -68,22 +78,3 @@ else:
 
     # Show the plot
     plt.show()
-
-    # Sort the filtered data by predicted profit in descending order
-    sorted_data = filtered_data.copy()
-    sorted_data['Predicted_Profit'] = y_pred_filtered
-    sorted_data = sorted_data.sort_values(by='Predicted_Profit', ascending=False)
-
-    # Get the top 5 and bottom 5 records
-    top_5 = sorted_data.head(5)
-    bottom_5 = sorted_data.tail(5)
-
-    # Print the top 5 predicted profit values and corresponding Order_IDs
-    print("\nTop 5 Predicted Profit Values:")
-    for index, row in top_5.iterrows():
-        print(f"Order_ID: {row['Order_ID']}, Predicted Profit: {row['Predicted_Profit']:.2f}")
-
-    # Print the bottom 5 predicted profit values and corresponding Order_IDs
-    print("\nBottom 5 Predicted Profit Values:")
-    for index, row in bottom_5.iterrows():
-        print(f"Order_ID: {row['Order_ID']}, Predicted Profit: {row['Predicted_Profit']:.2f}")
