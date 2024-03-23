@@ -1,7 +1,7 @@
-# NAAN MUDHALVAN
+
 NAME:KATHIRIPERUMAL S
 
-MAIL ID : 21ece24kathiriperumal@gmail.com
+MAIL ID : kathiriperumal24@gmail.com
 
 NM COURSE : DATA ANALYTICS WITH COGNOS
 
